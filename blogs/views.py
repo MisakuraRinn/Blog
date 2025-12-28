@@ -67,8 +67,8 @@ def edit_entry(request,entry_id):
   """编辑既有的条目"""
   entry=Entry.objects.get(id=entry_id)
   topic=entry.topic
-  if topic.owner != request.user and entry.owner!=request.user:
-    # 即不是博客发起人，也不是评论发起人
+  if entry.owner!=request.user:
+    # 不是评论发起人
     raise Http404
   if request.method!='POST':
     form=EntryForm(instance=entry)
