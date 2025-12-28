@@ -1,0 +1,10 @@
+{%extends "blogs/base.html"%}
+{%block content%}
+  <p><a href="{%url 'blogs:topic' topic.id%}">{{topic}}</a></p>
+  <p>添加一条评论喵</p>
+  <form action="{% url 'blogs:new_entry' topic.id%}" method="post">
+    {%csrf_token%}
+    {{form.as_div}}
+    <button name="submit">Add entry</button>
+  </form>
+{%endblock content%}

@@ -1,0 +1,35 @@
+{%extends 'blogs/base.html'%}
+{%load markdownify%}
+{%block page_header%}
+  <h1>{{topic.title}}</h1>
+  by {{topic.owner}}
+  <p>{{topic.text|markdownify}}</p>
+  <p>
+    <a href="{% url 'blogs:edit_topic' topic.id %}">编辑内容喵</a>
+  </p>
+  {%endblock page_header%}
+{%block content%}
+  <p>
+    <a href="{%url 'blogs:new_entry' topic.id%}">评论一句喵</a>
+  </p>
+  {%for entry in entries%}
+    <div class="card mb-3">
+      {% comment %} 包含时间戳和编辑链接的标题 {% endcomment %}
+      <h4 class="card-header">
+        {{entry.owner}} in {{entry.date_added|date:"M d, Y H:i"}}
+        <small>
+          <a href="{%url 'blogs:edit_entry' entry.id%}">
+            编辑评论喵
+          </a>
+        </small>
+      </h4>
+      {% comment %} 包含条目文本的正文 {% endcomment %}
+      <div class="card-body">
+        {% comment %} {{entry.text|linebreaks}} {% endcomment %}
+        {{entry.text|markdownify}}
+      </div>
+    </div>
+  {%empty%}
+  <p>这里没有任何人评论过喵</p>
+  {%endfor%}
+{%endblock content%}

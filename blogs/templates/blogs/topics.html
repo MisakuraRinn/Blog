@@ -1,0 +1,23 @@
+{%extends 'blogs/base.html'%}
+{%load markdownify%}
+{%block page_header%}
+  <h1>博客</h1>
+  <a href="{%url 'blogs:new_topic'%}">发布自己的博客喵</a>
+{%endblock page_header%}
+{%block content%}
+  <ul class="list-group border-bottom pb-2 mb-4">
+    {%for topic in topics%}
+    <li class="list-group-item border-0">
+      <p>
+        <a href="{%url 'blogs:topic' topic.id %}">
+        {{topic.title}}
+        </a>
+        by {{topic.owner}}
+      </p>
+      <p>{{topic.date_added|date:"M d, Y H:i"}}</p>
+    </li>
+    {%empty%}
+    <li class="list-group-item border-0">没有博客喵</li>
+    {%endfor%}
+  </ul>
+{%endblock content%} 
